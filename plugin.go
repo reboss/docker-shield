@@ -64,9 +64,8 @@ func (p *DockerShield) AuthZReq(req authorization.Request) authorization.Respons
             if body.HostConfig.Privileged {
                 return authorization.Response{Msg: "Privileged containers not allowed"}
             }
-        }
 
-        else if execAPI.MatchString(uri) {
+        } else if execAPI.MatchString(uri) {
             body := &execWrapper{}
 
             if err := json.NewDecoder(bytes.NewReader(req.RequestBody)).Decode(body); err != nil {
