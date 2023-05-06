@@ -1,23 +1,24 @@
-.PHONY: plugin
+.PHONY: all install clean uninstall
+
+LIBDIR=${DESTDIR}/lib/systemd/system
+BINDIR=${DESTDIR}/usr/lib/docker
+
+
+all: docker-shield
+
+docker-shield: main.go plugin.go
+		go build -o $@ .
+
+install:
+		mkdir -p ${LIBDIR} ${BINDIR}
+		install -m 644 systemd/docker-shield.service ${LIBDIR}
+		install -m 644 systemd/docker-shield.socket ${LIBDIR}
+		install -m 755 docker-shield ${BINDIR}
 
 clean:
-		rm -rf .container rootfs
-		docker plugin disable docker-shield || true
-		docker plugin rm docker-shield || true
+		rm -rf docker-shield
 
-.container: Dockerfile main.go plugin.go config.json
-		docker build -t docker-shield .
-		touch .container
-
-rootfs: .container
-		rm -rf $@
-		mkdir $@
-		$(eval ID := $(shell docker run --rm -d docker-shield))
-		docker export $(ID) | tar -x -C rootfs
-		docker kill $(ID)
-
-plugin: rootfs
-		docker plugin disable docker-shield || echo "Already disabled"
-		docker plugin rm docker-shield || echo "Already removed"
-		docker plugin create docker-shield .
-		docker plugin enable docker-shield
+uninstall:
+		rm -f ${LIBDIR}/docker-shield.service
+		rm -f ${LIBDIR}/docker-shield.socket
+		rm -f ${BINDIR}/docker-shield
