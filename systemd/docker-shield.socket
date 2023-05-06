@@ -1,0 +1,8 @@
+[Unit]
+Description=Docker authorization plugin to prevent common privilege escalation attacks
+
+[Socket]
+ListenStream=/run/docker/plugins/docker-shield.sock
+
+[Install]
+Wantedby=sockets.target

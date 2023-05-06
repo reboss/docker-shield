@@ -1,0 +1,12 @@
+[Unit]
+Description=Authorization plugin to prevent privilege escalation attacks
+Before=docker.service
+After=network.target docker-shield.socket
+Requires=docker-shield.socket docker.service
+
+[Service]
+ExecStart=/usr/lib/docker/docker-shield
+WorkingDirectory=/usr/lib/docker
+
+[Install]
+WantedBy=multi-user.target
