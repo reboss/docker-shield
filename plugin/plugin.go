@@ -9,6 +9,7 @@ import (
     "github.com/docker/go-plugins-helpers/authorization"
     "github.com/reboss/docker-shield/types"
     "github.com/reboss/docker-shield/securityopts"
+    "github.com/reboss/docker-shield/volumes"
 )
 
 var createAPI = regexp.MustCompile(`/v.*/containers/create`)
@@ -27,6 +28,9 @@ func handleCreateAPI(body *types.ConfigWrapper) error {
     }
     if !securityopts.ValidatePrivileges(body) {
         return fmt.Errorf("Privileged containers not allowed")
+    }
+    if !volumes.ValidateBindMounts(body) {
+        return fmt.Errorf("Not allowed to bind mount directories from the host")
     }
     return nil
 }
