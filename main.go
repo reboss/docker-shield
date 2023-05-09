@@ -4,10 +4,11 @@ import (
     "log"
     "fmt"
     "github.com/docker/go-plugins-helpers/authorization"
+    "github.com/reboss/docker-shield/plugin"
 )
 
 func main() {
-    dockerShield := NewDockerShield()
+    dockerShield := plugin.NewDockerShield()
     h := authorization.NewHandler(dockerShield)
 
     fmt.Println("docker-shield initializing")
