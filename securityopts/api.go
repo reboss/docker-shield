@@ -21,5 +21,11 @@ func ValidateSecOpts(body *types.ConfigWrapper) bool {
 }
 
 func ValidatePrivileges(body *types.ConfigWrapper) bool {
-    return !(body.Privileged || body.HostConfig.Privileged)
+    if body.HostConfig != nil && body.HostConfig.Privileged {
+        return false
+    }
+    if body.Privileged {
+        return false
+    }
+    return true
 }
