@@ -23,6 +23,12 @@ make
 sudo make install
 ```
 
+Then we need to update our systemd service file for docker.  Update the following line in /lib/systemd/system/docker.service:
+```
+- ExecStart=/usr/bin/dockerd --debug -H fd:// --containerd=/run/containerd/containerd.sock
++ ExecStart=/usr/bin/dockerd --debug -H fd:// --containerd=/run/containerd/containerd.sock --authorization-plugin=docker-shield
+```
+
 to uninstall:
 ```
 sudo make uninstall
