@@ -10,9 +10,8 @@ Docker Shield ensures the following:
 Work in progress:
 1. Enforcing that users start containers and exec into them with their own user ids, and not the default root user (may not be possible with a plugin)
 2. All containers are started with `--no-new-privileges` option, which ensures that users can't escalate privileges within a container, for example, with a setuid binary (this can be achieved by default in the /etc/daemon.json file
-3. Create a white list for bind mounts
-4. Create a white list for apparmor/seccomp/selinux profiles
-5. Prevent `--cap-add` option from being used
+3. Create a white list for apparmor/seccomp/selinux profiles
+4. Prevent `--cap-add` option from being used
 
 ## Installation 
 
