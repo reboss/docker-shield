@@ -14,11 +14,13 @@ install:
 		install -m 644 systemd/docker-shield.service ${LIBDIR}
 		install -m 644 systemd/docker-shield.socket ${LIBDIR}
 		install -m 755 docker-shield ${BINDIR}
+		touch ${BINDIR}/volume-wl.conf
 
 clean:
-		rm -rf docker-shield
+		rm -f docker-shield
 
 uninstall:
 		rm -f ${LIBDIR}/docker-shield.service
 		rm -f ${LIBDIR}/docker-shield.socket
 		rm -f ${BINDIR}/docker-shield
+		rm -f ${BINDIR}/volume-wl.conf
