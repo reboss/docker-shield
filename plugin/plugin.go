@@ -55,12 +55,10 @@ func (p *DockerShield) AuthZReq(req authorization.Request) authorization.Respons
             return authorization.Response{Err: err.Error()}
         }
         if createAPI.MatchString(uri) {
-            fmt.Println("Here we are")
             if err = handleCreateAPI(body); err != nil {
                 return authorization.Response{Msg: err.Error()}
             }
         } else if execAPI.MatchString(uri) {
-            fmt.Println("we are execing in now")
             if err = handleExecAPI(body); err != nil {
                 return authorization.Response{Msg: err.Error()}
             }
