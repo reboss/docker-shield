@@ -3,10 +3,10 @@
 LIBDIR=${DESTDIR}/lib/systemd/system
 BINDIR=${DESTDIR}/usr/lib/docker
 
-
 all: docker-shield
 
-docker-shield: main.go plugin.go
+GOFILES := $(wildcard ./**/*.go) main.go
+docker-shield: $(GOFILES)
 		go build -o $@ .
 
 install:
